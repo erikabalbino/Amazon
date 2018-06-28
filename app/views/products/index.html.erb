@@ -1,0 +1,22 @@
+<h1> 👠 🖥  All Products 📱 💄</h1>
+<ul>
+  <% @products.each do |product| %>
+    
+    <div style="margin-bottom: 10px;">
+        <li>
+            <%= link_to(
+                product.title,
+                product_path(product.id),
+            ) %>
+            <br />
+            <label> Description: <%= product.description %> </label>
+            <p><label> Price: <%= number_to_currency(product.price) %> </label></p>
+            
+            <small>
+                Posted <%= time_ago_in_words(product.created_at) %> ago
+            </small>
+            <hr>
+        </li>
+    </div>
+  <% end %>
+</ul>
