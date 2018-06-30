@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-
+    before_action only: [:show, :]
     def new
         @product = Product.new
     end
@@ -17,7 +17,11 @@ class ProductsController < ApplicationController
     end
 
     def show
-        @product = Product.find params[:id]
+        # @product = Product.find params[:id]
+
+        @review = Review.new
+        @reviews = @product.reviews.order(created_at: :desc)
+
     end
 
     def index
@@ -47,6 +51,10 @@ class ProductsController < ApplicationController
     private
     def products_params
         params.require(:product).permit(:title, :description, :price)
+    end
+
+    def find_params
+        @product = Product.find params[:id]
     end
 
 end

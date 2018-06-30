@@ -23,15 +23,67 @@
     <medium>
         <%= link_to "Edit", edit_product_path(@product) %>
     </medium>
-  <medium>
+    <medium>
     <%= link_to(
-      "Delete",
-      product_path(@product),
-      method: :delete,
-      data: {
-          confirm: "Are you sure?"
-          }
+        "Delete",
+        product_path(@product),
+        method: :delete,
+        data: {
+            confirm: "Are you sure?"
+            }
     ) %>
-  </medium>
+    </medium>
 
+</div>
+
+<h1> Reviews </h1>
+
+<%= form_for [@product, @review] do |f| %>
+  <%#= f.hidden_field :question_id, value: @question.id %>
+
+    <% if @review.errors.present? %>
+        <p>
+        <%= @review.errors.full_messages.join(', ') %>
+        </p>
+    <% end %>
+
+    <div>
+    <%= f.label(:description) %> <br />
+    <%= f.text_area(
+        :body, cols: 60, rows: 6,
+        placeholder: "What are your thoughts?"
+    ) %>
+    </div>
+    <div>
+        <%= f.label(:rating) %>
+        <%= f.number_field(:rating) %>
+    </div>
+    <br />
+  <%= f.submit "Submit" %>
+<% end %>
+
+<div class="">
+  <% @reviews.each do |review| %>
+    <div>
+      <p>
+        <label> Body: <%= review.body %> </label> <br />
+        <label> Rating: <%= review.rating %> </label> <br />
+
+           <small>
+            <%= link_to(
+                "Delete",
+                product_review_path(@product, review),
+                method: :delete,
+                data:{
+                    confirm: "Are you sure?"
+                 }
+                ) %> 
+        </small>
+        •     
+        <small>
+            Reviewed <%= time_ago_in_words(review.created_at) %> ago
+        </small>
+      </p>
+    </div>
+  <% end %>
 </div>
