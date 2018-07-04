@@ -7,6 +7,8 @@ class ReviewsController < ApplicationController
 
         @review.product = @product
 
+        @review.user = current_user
+
         if @review.save
             redirect_to product_path(@product)
         else

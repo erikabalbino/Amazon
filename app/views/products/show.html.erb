@@ -5,6 +5,9 @@
 <p> <%= @product.description %> </p>
 <p> <%= number_to_currency(@product.price) %> </p>
 
+<strong>Creaed By <%= @product.user&.full_name %> </strong>
+
+
 <div> 
     <small>
         Posted <%= time_ago_in_words(@product.created_at) %> ago
@@ -18,23 +21,24 @@
 
 <br />
 
-<div>
+<% if user_signed_in? %>
+    <div>
+        <medium>
+            <%= link_to "Edit", edit_product_path(@product) %>
+        </medium>
+        <medium>
+        <%= link_to(
+            "Delete",
+            product_path(@product),
+            method: :delete,
+            data: {
+                confirm: "Are you sure?"
+                }
+        ) %>
+        </medium>
+    </div>
+<% end %>
 
-    <medium>
-        <%= link_to "Edit", edit_product_path(@product) %>
-    </medium>
-    <medium>
-    <%= link_to(
-        "Delete",
-        product_path(@product),
-        method: :delete,
-        data: {
-            confirm: "Are you sure?"
-            }
-    ) %>
-    </medium>
-
-</div>
 
 <h1> Reviews </h1>
 
@@ -66,9 +70,11 @@
   <% @reviews.each do |review| %>
     <div>
       <p>
+        <strong><%= review.user&.full_name %>  reviwed: 
+        </strong> <br />
         <label> Body: <%= review.body %> </label> <br />
         <label> Rating: <%= review.rating %> </label> <br />
-
+        <% if user_signed_in? %>
            <small>
             <%= link_to(
                 "Delete",
@@ -80,6 +86,7 @@
                 ) %> 
         </small>
         •     
+        <% end %>
         <small>
             Reviewed <%= time_ago_in_words(review.created_at) %> ago
         </small>

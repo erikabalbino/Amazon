@@ -10,19 +10,44 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to('Home', home_path)%>
+      ✧
+      <% if user_signed_in? %>
+        <%= link_to('New Product', new_product_path)%>
+        ✧
+      <% end %>
+      <%= link_to('Products', products_path)%>
+      ✧
+      <%= link_to('Contact Us', contact_path) %>
+      ✧
+      <%= link_to('About', about_path) %>
+      ✧
+      <% if current_user.present? %>
+        <span>Hello, <%= current_user.first_name %></span>
+      ✧
+        <%= link_to(
+            'Sign Out',
+            session_path,
+            method: :delete
+        ) %>
+      <% else %>
+        <%= link_to('Sign In', new_session_path) %>
+        ✧
+        <%= link_to('Sign Up', new_user_path) %>
 
-    <%= link_to('Home', home_path)%>
-    ✧
-    <%= link_to('New Product', new_product_path)%>
-    ✧
-    <%= link_to('Products', products_path)%>
-    ✧
-    <%= link_to('Contact Us', contact_path) %>
-    ✧
-    <%= link_to('About', about_path) %>
+      <% end %>
 
-    <hr>
+      <hr>
+    </nav>
+
+    <% flash.each do |type, message| %>
+      <div class="flash flash-<%= type %>">
+        <%= message %>
+      </div>
+    <% end %>
 
     <%= yield %>
   </body>
+
 </html>
