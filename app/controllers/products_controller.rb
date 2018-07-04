@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+    before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
     before_action :find_params, only: [:show, :edit, :update, :destroy]
 
     def new
