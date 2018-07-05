@@ -27,7 +27,6 @@ class ReviewsController < ApplicationController
 
     def update
         @review = Review.find params[:id]
-        @review.hidden: true
 
         if @review.update(review_params)
 
