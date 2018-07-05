@@ -21,4 +21,6 @@ class SessionsController < ApplicationController
         session[:user_id] = nil
         redirect_to home_path
     end
+
+    
 end

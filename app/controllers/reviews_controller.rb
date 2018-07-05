@@ -25,8 +25,30 @@ class ReviewsController < ApplicationController
         redirect_to product_path(@review.product)
     end
 
+    def update
+        @review = Review.find params[:id]
+        @review.hidden: true
+
+        if @review.update(review_params)
+
+            redirect_to product_path(@review.product)
+        else
+            render :show
+        end
+        
+    end
+
     private
     def review_params
-        params.require(:review).permit(:body, :rating)
+        params.require(:review).permit(:body, :rating, :hidden)
+    end
+
+    def authorize_user!
+        @review = Review.find params[:id]
+
+        unless can?(:manage, @review)
+            flash[:danger] = "Access Denied !!"
+            redirect_to product_path(@review.product)
+        end
     end
 end

@@ -27,6 +27,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'cowsay'
 gem 'faker'
+gem 'cancancan'
+gem 'bootstrap'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

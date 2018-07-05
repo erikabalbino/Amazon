@@ -25,7 +25,12 @@
       ✧
       <% if current_user.present? %>
         <span>Hello, <%= current_user.first_name %></span>
-      ✧
+
+        <% if current_user.admin? %>
+          ✧
+          <%= link_to('Dashboard', admin_dashboard_index_path) %>
+        <% end %>
+        ✧
         <%= link_to(
             'Sign Out',
             session_path,

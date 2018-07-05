@@ -23,19 +23,23 @@
 
 <% if user_signed_in? %>
     <div>
-        <medium>
-            <%= link_to "Edit", edit_product_path(@product) %>
-        </medium>
-        <medium>
-        <%= link_to(
-            "Delete",
-            product_path(@product),
-            method: :delete,
-            data: {
-                confirm: "Are you sure?"
-                }
-        ) %>
-        </medium>
+        <% if can?(:edit, @product) %>
+            <medium>
+                <%= link_to "Edit", edit_product_path(@product) %>
+            </medium>
+        <% end %>
+        <% if can?(:delete, @product) %>
+            <medium>
+            <%= link_to(
+                "Delete",
+                product_path(@product),
+                method: :delete,
+                data: {
+                    confirm: "Are you sure?"
+                    }
+            ) %>
+            </medium>
+        <% end %>
     </div>
 <% end %>
 
@@ -64,33 +68,46 @@
     </div>
     <br />
   <%= f.submit "Submit" %>
+
 <% end %>
 
 <div class="">
-  <% @reviews.each do |review| %>
-    <div>
-      <p>
-        <strong><%= review.user&.full_name %>  reviwed: 
-        </strong> <br />
-        <label> Body: <%= review.body %> </label> <br />
-        <label> Rating: <%= review.rating %> </label> <br />
-        <% if user_signed_in? %>
-           <small>
-            <%= link_to(
-                "Delete",
-                product_review_path(@product, review),
-                method: :delete,
-                data:{
-                    confirm: "Are you sure?"
-                 }
-                ) %> 
-        </small>
-        •     
+
+    <% @reviews.each do |review| %>
+        <% if review.hidden  == false %>
+            <div>
+            <p>
+                <strong><%= review.user&.full_name %>  reviwed: 
+                </strong> <br />
+                <label> Body: <%= review.body %> </label> <br />
+                <label> Rating: <%= review.rating %> </label> <br />
+                <% if user_signed_in? && can?(:delete, review) %>
+                    <small>
+                        <%= link_to(
+                            "Delete",
+                            product_review_path(@product, review),
+                            method: :delete,
+                            data:{
+                                confirm: "Are you sure?"
+                            }
+                            ) %> 
+                    </small>
+                    •     
+                <% end %>
+                <small>
+                    Reviewed <%= time_ago_in_words(review.created_at) %> ago
+                </small>
+            </p>
+
+                <small>
+                    <%= link_to("Hide review", 
+                        product_review_path(@product, review),
+                        method: :patch
+                    ) %> 
+
+                </small>
+            </div>
         <% end %>
-        <small>
-            Reviewed <%= time_ago_in_words(review.created_at) %> ago
-        </small>
-      </p>
-    </div>
-  <% end %>
+    <% end %>
+
 </div>

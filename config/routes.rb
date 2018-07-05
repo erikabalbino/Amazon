@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
 
+namespace :admin do
+  resources :dashboard, only: [:index]
+end
+
 resource :session, only: [:new, :create, :destroy]
 resources :users, only: [:new, :create]
 
 resources :products do
-  resources :reviews, only: [:create, :destroy]
+  resources :reviews, only: [:create, :update, :destroy]
 end
+
 
   #Routes to Prouct model
   # get "/products/new", to: "products#new", as: :new_product

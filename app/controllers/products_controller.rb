@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
     before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-    before_action :find_params, only: [:show, :edit, :update, :destroy]
-
+    before_action :find_product, only: [:show, :edit, :update, :destroy]
+    before_action :authorize_user!, only: [:edit, :update, :destroy]
+    
     def new
         @product = Product.new
     end
@@ -57,8 +58,17 @@ class ProductsController < ApplicationController
         params.require(:product).permit(:title, :description, :price)
     end
 
-    def find_params
+    def find_product
         @product = Product.find params[:id]
+    end
+
+    def authorize_user!
+
+        unless can?(:manage, @product)
+            flash[:danger] = "Access Denied!!"
+            redirect_to product_path(@product)
+        end
+
     end
 
 end
