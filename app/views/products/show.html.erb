@@ -47,8 +47,6 @@
 <h1> Reviews </h1>
 
 <%= form_for [@product, @review] do |f| %>
-  <%#= f.hidden_field :question_id, value: @question.id %>
-
     <% if @review.errors.present? %>
         <p>
         <%= @review.errors.full_messages.join(', ') %>
@@ -74,40 +72,48 @@
 <div class="">
 
     <% @reviews.each do |review| %>
-        <% if review.hidden  == false %>
-            <div>
+
+        <div>
             <p>
-                <strong><%= review.user&.full_name %>  reviwed: 
-                </strong> <br />
-                <label> Body: <%= review.body %> </label> <br />
-                <label> Rating: <%= review.rating %> </label> <br />
-                <% if user_signed_in? && can?(:delete, review) %>
-                    <small>
-                        <%= link_to(
-                            "Delete",
-                            product_review_path(@product, review),
-                            method: :delete,
-                            data:{
-                                confirm: "Are you sure?"
-                            }
-                            ) %> 
-                    </small>
-                    •     
-                <% end %>
-                <small>
-                    Reviewed <%= time_ago_in_words(review.created_at) %> ago
-                </small>
-            </p>
+            <strong>
+                <%= review.user&.full_name %>  reviwed: 
+            </strong> <br />
 
+            <label> Body: <%= review.body %> </label> <br />
+            <label> Rating: <%= review.rating %> </label> <br />
+            <% if user_signed_in? && can?(:delete, review) %>
                 <small>
-                    <%= link_to("Hide review", 
+                    <%= link_to(
+                        "Delete",
                         product_review_path(@product, review),
-                        method: :patch
-                    ) %> 
-
+                        method: :delete,
+                        data:{
+                            confirm: "Are you sure?"
+                        }
+                        ) %> 
                 </small>
-            </div>
-        <% end %>
+                •     
+            <% end %>
+            <small>
+                Reviewed <%= time_ago_in_words(review.created_at) %> ago
+            </small>
+
+            <% if user_signed_in? && can?(:like, review) %>
+                <% like = review.likes.find_by(user: current_user) %>
+                <% if like.present? %>
+                        •
+                        
+                        <%= link_to("Unlike", like_path(like), method: :delete) %>
+                <% else %>
+                        • 
+                        <%= link_to("Link", review_likes_path(review), method: :post) %>
+                        <%= icon('fas', 'flag') %>
+                <% end %>
+            <% end %>
+            <%= pluralize(review.likes.count, "like") %>
+
+        </div>
+
     <% end %>
 
 </div>

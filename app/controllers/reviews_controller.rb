@@ -45,7 +45,7 @@ class ReviewsController < ApplicationController
     def authorize_user!
         @review = Review.find params[:id]
 
-        unless can?(:manage, @review)
+        unless can?(:crud, @review)
             flash[:danger] = "Access Denied !!"
             redirect_to product_path(@review.product)
         end

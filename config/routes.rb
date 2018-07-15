@@ -8,8 +8,18 @@ resource :session, only: [:new, :create, :destroy]
 resources :users, only: [:new, :create]
 
 resources :products do
+
   resources :reviews, only: [:create, :update, :destroy]
+
 end
+
+resources :reviews, shallow: true, only: [] do
+  resources :likes, only: [:create, :destroy]
+end
+
+
+
+
 
 
   #Routes to Prouct model

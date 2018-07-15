@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
 
     def authorize_user!
 
-        unless can?(:manage, @product)
+        unless can?(:crud, @product)
             flash[:danger] = "Access Denied!!"
             redirect_to product_path(@product)
         end
