@@ -12,13 +12,14 @@
  *
  */
 
- @import 'bootstrap';
+@import 'bootstrap';
 
 @import 'about';
 @import 'contact';
 @import 'home';
-@import 'font-awesome-sprockets';
-@import 'font-awesome';
+
+// @import "font-awesome-sprockets";
+@import "font-awesome";
 
  html {
     font-family: Helvetica, sans-serif;

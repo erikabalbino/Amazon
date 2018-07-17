@@ -30,8 +30,8 @@ gem 'faker'
 gem 'cancancan'
 gem 'bootstrap'
 gem 'jquery-rails'
-# gem 'font-awesome-rails'
-gem 'font-awesome-sass', '~> 5.0.13'
+gem 'font-awesome-rails'
+# gem 'font-awesome-sass', '~> 5.0.13'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

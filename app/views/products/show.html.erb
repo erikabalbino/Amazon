@@ -97,19 +97,19 @@
             <small>
                 Reviewed <%= time_ago_in_words(review.created_at) %> ago
             </small>
-
+            <p>
+            
             <% if user_signed_in? && can?(:like, review) %>
                 <% like = review.likes.find_by(user: current_user) %>
                 <% if like.present? %>
                         •
-                        
-                        <%= link_to("Unlike", like_path(like), method: :delete) %>
+                        <%= link_to fa_icon('thumbs-up 3x'), like_path(like), method: :delete %>
                 <% else %>
                         • 
-                        <%= link_to("Link", review_likes_path(review), method: :post) %>
-                        <%= icon('fas', 'flag') %>
+                        <%= link_to fa_icon('thumbs-o-up 3x'), review_likes_path(review), method: :post %>
                 <% end %>
             <% end %>
+
             <%= pluralize(review.likes.count, "like") %>
 
         </div>
