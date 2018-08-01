@@ -2,7 +2,7 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :product
 
-  has_many :likes
+  has_many :likes, dependent: :destroy
   has_many :likers, through: :likes, source: :user
 
   validates :rating, 

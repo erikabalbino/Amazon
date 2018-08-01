@@ -23,7 +23,11 @@
       ✧
       <%= link_to('About', about_path) %>
       ✧
+      <%= link_to('Tags', tags_path) %>
+      ✧
       <% if current_user.present? %>
+        <%= link_to('Favourite Products', favourites_path) %>
+        ✧
         <span>Hello, <%= current_user.first_name %></span>
 
         <% if current_user.admin? %>

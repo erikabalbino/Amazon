@@ -27,11 +27,20 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'cowsay'
 gem 'faker'
+
 gem 'cancancan'
+
 gem 'bootstrap'
 gem 'jquery-rails'
+
 gem 'font-awesome-rails'
 # gem 'font-awesome-sass', '~> 5.0.13'
+
+gem 'letter_opener'
+
+gem 'active_model_serializers'
+
+gem 'rack-cors'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

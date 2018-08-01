@@ -1,0 +1,19 @@
+<h1> Hi, <%= @product_owner.full_name %> 👏 </h1>
+
+<p> 
+    It is a confirmation that you created a new product:
+    <p>Product: <%= @product.title %> </p>
+    <p>Description: <%= @product.description %> </p>
+    <p>Price: <%= number_to_currency(@product.price) %> </p>
+</p>
+
+
+<%=
+  link_to(
+    "Click here to view your product",
+    product_url(@product)
+  )
+%>
+
+
+<p>Cheers,<br/>Amazon Team</p>

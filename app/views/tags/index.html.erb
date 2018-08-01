@@ -1,0 +1,16 @@
+<h1  class="mb-4"> ✧ All Tags ✧ </h1>
+
+<ul class="decoration">
+  <% @tags.each do |tag| %>
+    
+    <div style="margin-bottom: 10px;">
+        <li>
+            <%= link_to(
+                tag.name,
+                tag_path(tag)
+            ) %>
+            <hr>
+        </li>
+    </div>
+  <% end %>
+</ul>

@@ -1,0 +1,20 @@
+Hi, <%= @product_owner.full_name %> 👏 
+
+ 
+    You got a new review for your product:
+    Product: <%= @product.title %> 
+
+
+
+    The review is: <%= @review.body %>  
+    Rating: <%= @review.rating %>  
+    Author: <%= @review.user&.full_name %> 
+
+
+
+  Go to the following to see your question:
+<%= product_url(@product) %>
+
+
+Cheers,
+Amazon Team

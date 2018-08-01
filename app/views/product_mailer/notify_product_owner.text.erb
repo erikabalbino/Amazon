@@ -1,0 +1,19 @@
+Hi, <%= @product_owner.full_name %> 👏 
+
+
+  It is a confirmation that you created a new product:
+  Product: <%= @product.title %> 
+  Description: <%= @product.description %> 
+  Price: <%= number_to_currency(@product.price) %> 
+
+
+
+
+  Go to the following to see your product:
+  <%= product_url(@product) %>
+
+
+
+Cheers,
+
+Amazon Team

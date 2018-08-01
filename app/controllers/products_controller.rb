@@ -15,6 +15,12 @@ class ProductsController < ApplicationController
         @product.user =current_user
 
         if @product.save
+
+            ProductMailer
+            .notify_product_owner(@product)
+            .deliver_now
+
+
             redirect_to product_path(@product.id)
         else
             render :new
@@ -24,9 +30,12 @@ class ProductsController < ApplicationController
     def show
         # @product = Product.find params[:id]
 
+        @tags = @product.tags.order(name: :asc)
+
         @review = Review.new
         @reviews = @product.reviews.order(created_at: :desc)
 
+        @favourite = @product.favourites.find_by(user: current_user)
     end
 
     def index
@@ -55,7 +64,7 @@ class ProductsController < ApplicationController
 
     private
     def products_params
-        params.require(:product).permit(:title, :description, :price)
+        params.require(:product).permit(:title, :description, :price, tag_ids: [])
     end
 
     def find_product

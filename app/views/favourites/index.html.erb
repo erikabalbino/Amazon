@@ -1,0 +1,16 @@
+<h1  class="mb-4"> ✧ All Favourited Products ✧ </h1>
+
+<ul class="decoration">
+  <% @favourites.each do |product| %>
+    
+    <div style="margin-bottom: 10px;">
+        <li>
+            <%= link_to(
+                product.title,
+                product_path(product)
+            ) %>
+            <hr>
+        </li>
+    </div>
+  <% end %>
+</ul>

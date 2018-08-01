@@ -11,14 +11,19 @@ class ReviewsController < ApplicationController
         @review.user = current_user
 
         if @review.save
+
+            ReviewMailer
+                .notify_product_owner_new_review(@review)
+                .deliver_now
+
             redirect_to product_path(@product)
+
         else
             @reviews = @product.reviews.order(created_at: :desc)
             render "products/show"
         end
     end
-
-    def destroy
+     def destroy
         @review = Review.find params[:id]
         @review.destroy
 
